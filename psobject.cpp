@@ -97,3 +97,43 @@ void PSCDP::PSObject::setWiringImgPath(QString wiringImgPath)
 {
     m_wiringImgPath = wiringImgPath;
 }
+
+double PSCDP::PSObject::getHeight()
+{
+    return m_height;
+}
+
+void PSCDP::PSObject::setHeight(double h)
+{
+    m_height = h;
+}
+
+double PSCDP::PSObject::getWidth()
+{
+    return m_width;
+}
+
+void PSCDP::PSObject::setWidth(double w)
+{
+    m_width = w;
+}
+
+QList<QString> PSCDP::PSObject::getInputs()
+{
+    return m_inputs;
+}
+
+void PSCDP::PSObject::addInput(QString i)
+{
+    m_inputs.append(i);
+}
+
+QList<QString> PSCDP::PSObject::getOutputs()
+{
+    return m_outputs;
+}
+
+void PSCDP::PSObject::addOutput(QString o)
+{
+    m_outputs.append(o);
+}

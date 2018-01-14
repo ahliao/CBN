@@ -1,3 +1,2 @@
-Sensors			Description			Type	Input 1		Input 2		Input 3		Input 4		Output 1	Output 2	Output 3	Output 4	Layout Image		System Image		Wiring Image
-    Blah MW		Description of MW		IO	C:\Users\Alex\Documents\Qt_Projects\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\SysImgs\test.bmp		C:\Users\Alex\Documents\Qt_Projects\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\SysImgs\test.bmp		C:\Users\Alex\Documents\Qt_Projects\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\SysImgs\test.bmp
-    Blah BLS		Description of BLS		IO	Layout Image		Sys Img			Wiring Img
+Sensors	Name	Description	Type	Input 1	Input 2	Input 3	Input 4	Output 1	Output 2	Output 3	Output 4	Layout Image	System Image	Wiring Image	Width	Height
+	Blah MW	Description of MW	IO	In 1	In 2			Out 1	Out 2			C:\Users\aliao\Documents\FEW WSF Local\Liao\CBN\build-PSCDP-Desktop_Qt_5_8_0_MinGW_32bit-Debug\SysImgs\test.bmp	C:\Users\aliao\Documents\FEW WSF Local\Liao\CBN\build-PSCDP-Desktop_Qt_5_8_0_MinGW_32bit-Debug\SysImgs\test.bmp	C:\Users\Alex\Documents\Qt_Projects\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\SysImgs\test.bmp	12	12

@@ -5,8 +5,10 @@
 #include <QWidget>
 #include <QLabel>
 #include <QLineEdit>
+#include <QDoubleSpinBox>
 #include <QComboBox>
 #include <QPushButton>
+#include "psobject.h"
 
 namespace PSCDP
 {
@@ -17,24 +19,27 @@ namespace PSCDP
     public:
         explicit PSObjectCreateDialog(QWidget *parent = 0);
 
+        void loadPSObject(PSObject p);
+        PSObject getPSObject() const;
+
     signals:
 
     public slots:
+        void handleDoneBtn();
+        void handleLayoutBrw();
+        void handleSystemBrw();
+        void handleWiringBrw();
 
     private:
         QLineEdit *nameTxtEdt;
         QLineEdit *descTxtEdt;
-        QLineEdit *input1TxtEdt;
-        QLineEdit *input2TxtEdt;
-        QLineEdit *input3TxtEdt;
-        QLineEdit *input4TxtEdt;
-        QLineEdit *output1TxtEdt;
-        QLineEdit *output2TxtEdt;
-        QLineEdit *output3TxtEdt;
-        QLineEdit *output4TxtEdt;
+        QList<QLineEdit*> inputTxtEdt;
+        QList<QLineEdit*> outputTxtEdt;
         QLineEdit *layoutImgTxtEdt;
         QLineEdit *systemImgTxtEdt;
         QLineEdit *wiringImgTxtEdt;
+        QDoubleSpinBox *widthSpnBox;
+        QDoubleSpinBox *heightSpnBox;
 
         QComboBox *typeCmbox;
 
@@ -47,6 +52,8 @@ namespace PSCDP
         QLabel *layoutImgPic;
         QLabel *systemImgPic;
         QLabel *wiringImgPic;
+
+        PSObject psobj;
     };
 }
 

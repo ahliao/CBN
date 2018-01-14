@@ -1,0 +1,8 @@
+Sensors	Name	Description	Type	Layout Image	System Image	Wiring Image	Input 1	Input 2	Input 3	Input 4	Output 1	Output 2	Output 3	Output 4	Height	Width
+	VTW	Vertical Taut Wire	IO	Y:\CBN\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\LayoutImgs\test.png			Trouble								0	0
+	FOSS	FiberSenSys	IO				Fault	Alarm A							0	0
+	IIDS	Infrared Intrusion Detection System	IO				Tamper								0	0
+	WSD	Card Reader	IO												0	0
+	Tamper	General Tamper Switch	IO												0	0
+	UPS	General UPS	IO				AC Fail								0	0
+	BMS	Balanced Magnetic Switch	IO				Tamper								0	0

@@ -17,6 +17,7 @@ namespace PSCDP
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
         int columnCount(const QModelIndex &parent) const;
         QVariant data(const QModelIndex &index, int role) const;
+        Qt::DropActions supportedDropActions() const;
         Qt::ItemFlags flags(const QModelIndex &index) const;
         bool setData(const QModelIndex &index, const QVariant &value,
                          int role = Qt::EditRole);
@@ -25,6 +26,11 @@ namespace PSCDP
         bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
         bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
         bool insertPSObject(int row, PSObject psobject, const QModelIndex &parent = QModelIndex());
+        bool appendPSObject(PSObject psobject);
+        bool clear();
+
+        PSObject getPSObject(int row) { return LOM.at(row); }
+        QVector<PSObject> getPSObjects() { return LOM; }
 
     private:
         QVector<PSObject> LOM;

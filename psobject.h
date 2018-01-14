@@ -2,6 +2,7 @@
 #define PSOBJECT_H
 
 #include <QString>
+#include <QList>
 
 namespace PSCDP
 {
@@ -35,6 +36,14 @@ namespace PSCDP
         void setSystemImgPath(QString systemImgPath);
         QString getWiringImgPath();
         void setWiringImgPath(QString wiringImgPath);
+        double getHeight();
+        void setHeight(double h);
+        double getWidth();
+        void setWidth(double w);
+        QList<QString> getInputs();
+        void addInput(QString i);
+        QList<QString> getOutputs();
+        void addOutput(QString o);
 
     protected:
         QString m_id;
@@ -44,6 +53,10 @@ namespace PSCDP
         QString m_layoutImgPath;
         QString m_systemImgPath;
         QString m_wiringImgPath;
+        QList<QString> m_inputs;
+        QList<QString> m_outputs;
+        double m_height;
+        double m_width;
     };
 }
 

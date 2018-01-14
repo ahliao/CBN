@@ -18,12 +18,16 @@ namespace PSCDP
     signals:
 
     public slots:
+        void loadLOM();
+        void saveLOM();
         void addPSObject();
         void editPSObject();
         void removePSObject();
 
     private:
         QTableView *LOMTableView;
+        QPushButton *loadLOMBtn;
+        QPushButton *saveLOMBtn;
         QPushButton *addPSObjectBtn;
         QPushButton *editPSObjectBtn;
         QPushButton *removePSObjectBtn;

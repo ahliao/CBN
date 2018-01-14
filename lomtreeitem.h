@@ -3,26 +3,27 @@
 
 #include <QList>
 #include <QVariant>
+#include "psobject.h"
+
+using namespace PSCDP;
 
 class TreeItem
 {
 public:
-    explicit TreeItem(const QList<QVariant> &data, TreeItem *parentItem = 0);
+    explicit TreeItem(const PSObject &data, TreeItem *parentItem = 0);
     ~TreeItem();
 
     void appendChild(TreeItem *child);
 
     TreeItem *child(int row);
     int childCount() const;
-    int columnCount() const;
-    QVariant data(int column) const;
-    QList<QVariant> rowData() const;
+    PSObject data() const;
     int row() const;
     TreeItem *parentItem();
 
 private:
     QList<TreeItem*> m_childItems;
-    QList<QVariant> m_itemData;
+    PSObject m_itemData;
     TreeItem *m_parentItem;
 };
 

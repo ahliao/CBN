@@ -36,19 +36,28 @@ QVariant PSCDP::LOMTableModel::data(const QModelIndex &index, int role) const
     }
 }
 
+Qt::DropActions PSCDP::LOMTableModel::supportedDropActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
+}
+
 Qt::ItemFlags PSCDP::LOMTableModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.column() != 2)
-        return Qt::ItemIsEnabled;
+    if (!index.isValid() || index.column() == 1)
+        return Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 
-    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 bool PSCDP::LOMTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     // Replace the part being edited with the value
     if (index.isValid() && role == Qt::EditRole) {
-        if (index.column() == 0) return false;
+        if (index.column() == 0) {
+            LOM[index.row()].setID(value.toString());
+            emit dataChanged(index, index);
+            return true;
+        }
         else if (index.column() == 1) return false;
         else if (index.column() == 2) {
             LOM[index.row()].setDescription(value.toString());
@@ -106,5 +115,26 @@ bool PSCDP::LOMTableModel::insertPSObject(int row, PSObject psobject, const QMod
     LOM.insert(row, psobject);
 
     endInsertRows();
+    return true;
+}
+
+bool PSCDP::LOMTableModel::appendPSObject(PSObject psobject)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+
+    LOM.insert(rowCount(), psobject);
+
+    endInsertRows();
+    return true;
+}
+
+bool PSCDP::LOMTableModel::clear()
+{
+    beginRemoveRows(QModelIndex(), 0, rowCount());
+
+    LOM.clear();
+
+    endRemoveRows();
+
     return true;
 }

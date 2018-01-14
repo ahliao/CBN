@@ -4,6 +4,9 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include "psobject.h"
+
+using namespace PSCDP;
 
 class TreeItem;
 
@@ -15,7 +18,7 @@ public:
     explicit TreeModel(const QString &data, QObject *parent = 0);
     ~TreeModel();
 
-    QList<QVariant> getRowData(const QModelIndex &index) const;
+    PSObject getData(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     QVariant headerData(int section, Qt::Orientation orientation,

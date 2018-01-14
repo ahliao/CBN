@@ -15,7 +15,8 @@ PSCDP::LOMDialog::LOMDialog(QWidget */*parent*/)
     QByteArray allLibsData;
 
     // Read the library list file
-    QFile libFile("partlibs.txt");
+    qDebug() << QDir::currentPath() + "/partlibs.txt";
+    QFile libFile(QDir::currentPath() + "\\partlibs.txt");
     libFile.open(QIODevice::ReadOnly);
     libList = QString(libFile.readAll()).split(QString("\n"));
     libFile.close();
@@ -82,23 +83,23 @@ PSObject PSCDP::LOMDialog::getPSObject() const
 
 void PSCDP::LOMDialog::handleTreeSelection(const QModelIndex &current,const QModelIndex &/*previous*/)
 {
-    if (model->columnCount(current) >= 5) {
-        QString layoutImagePath = model->getRowData(current).at(3).toString();
+    //if (model->columnCount(current) >= 5) {
+        PSObject psobj = model->getData(current);
+        QString layoutImagePath = psobj.getLayoutImgPath();
         QPixmap layoutImage(layoutImagePath);
         layoutImageLbl->setPixmap(layoutImage);
-        QString sysImagePath = model->getRowData(current).at(4).toString();
+        QString sysImagePath = psobj.getSystemImgPath();
         QPixmap sysImage(sysImagePath);
         sysImageLbl->setPixmap(sysImage);
-        QString wiringImagePath = model->getRowData(current).at(5).toString();
+        QString wiringImagePath = psobj.getWiringImgPath();
         QPixmap wiringImage(wiringImagePath);
         wiringImageLbl->setPixmap(wiringImage);
-    }
+    //}
 }
 
 // File layout (Name, Description, Type, Layout, System, Wiring)
 void PSCDP::LOMDialog::handeDoneBtn()
 {
-    QList<QVariant> strList = model->getRowData(partsTree->currentIndex());
-    returnPSObject = PSObject("N/A", ObjectType::IO, strList.at(0).toString(), strList.at(1).toString());
+    returnPSObject = model->getData(partsTree->selectionModel()->currentIndex());
     accept();
 }

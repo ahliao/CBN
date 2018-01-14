@@ -2,7 +2,7 @@
 
 #include "lomtreeitem.h"
 
-TreeItem::TreeItem(const QList<QVariant> &data, TreeItem *parent)
+TreeItem::TreeItem(const PSObject &data, TreeItem *parent)
 {
     m_parentItem = parent;
     m_itemData = data;
@@ -28,17 +28,7 @@ int TreeItem::childCount() const
     return m_childItems.count();
 }
 
-int TreeItem::columnCount() const
-{
-    return m_itemData.count();
-}
-
-QVariant TreeItem::data(int column) const
-{
-    return m_itemData.value(column);
-}
-
-QList<QVariant> TreeItem::rowData() const
+PSObject TreeItem::data() const
 {
     return m_itemData;
 }

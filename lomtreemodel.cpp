@@ -14,10 +14,9 @@
 TreeModel::TreeModel(const QString &data, QObject *parent)
     : QAbstractItemModel(parent)
 {
-    QList<QVariant> rootData;
-    rootData << "Name" << "Description";
+    PSObject rootData("", ObjectType::General, "Name", "Description");
     rootItem = new TreeItem(rootData);
-    qDebug() << data;
+    qDebug() << rootData.getDescription();
     setupModelData(data.split(QString("\n")), rootItem);
 }
 
@@ -28,10 +27,17 @@ TreeModel::~TreeModel()
 
 int TreeModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    /*if (parent.isValid())
         return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
     else
-        return rootItem->columnCount();
+        return rootItem->columnCount();*/
+    return 2;
+}
+
+PSObject TreeModel::getData(const QModelIndex &index) const
+{
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    return item->data();
 }
 
 QVariant TreeModel::data(const QModelIndex &index, int role) const
@@ -44,18 +50,13 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
 
     TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
-    return item->data(index.column());
-}
+    //qDebug() << item->data().getName();
+    if (index.column() == 0)
+        return item->data().getName();
+    else if (index.column() == 1)
+        return item->data().getDescription();
 
-QList<QVariant> TreeModel::getRowData(const QModelIndex &index) const
-{
-    QList<QVariant> rowData;
-    if (!index.isValid())
-        return rowData;
-
-    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
-
-    return item->rowData();
+    return QVariant();
 }
 
 Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
@@ -69,14 +70,17 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
 QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
                                int role) const
 {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-        return rootItem->data(section);
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        if (section == 0)
+            return rootItem->data().getName();
+        else if (section == 1)
+            return rootItem->data().getDescription();
+    }
 
     return QVariant();
 }
 
-QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent)
-            const
+QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
         return QModelIndex();
@@ -132,23 +136,45 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
 
     int number = 0;
 
+    int position = 0;
+    QString lineData = lines[number].mid(position).trimmed();
+    QStringList colHeaders = lineData.split("\t", QString::SkipEmptyParts);
+    qDebug() << colHeaders;
+
     while (number < lines.count()) {
-        int position = 0;
         while (position < lines[number].length()) {
-            if (lines[number].at(position) != ' ')
+            if (lines[number].at(position) != '\t')
                 break;
             position++;
         }
 
-        QString lineData = lines[number].mid(position).trimmed();
-
+        QString lineData = lines[number];
+        // TODO: Check if format is correct
         if (!lineData.isEmpty()) {
             // Read the column data from the rest of the line.
-            QStringList columnStrings = lineData.split("\t", QString::SkipEmptyParts);
+            QStringList columnStrings = lineData.split("\t", QString::KeepEmptyParts);
             qDebug() << columnStrings;
-            QList<QVariant> columnData;
-            for (int column = 0; column < columnStrings.count(); ++column)
-                columnData << columnStrings[column];
+            //qDebug() << columnStrings;
+            PSObject psdata;
+            for (int i = 1; i < colHeaders.size(); ++i) {
+                if (colHeaders.at(i) == "Name") psdata.setName(columnStrings[i]);
+                else if (colHeaders.at(i) == "Description") psdata.setDescription(columnStrings[i]);
+                else if (colHeaders.at(i) == "Type") {
+                    if (columnStrings.at(i) == "IO") psdata.setType(ObjectType::IO);
+                    else if (columnStrings.at(i) == "General") psdata.setType(ObjectType::General);
+                    else if (columnStrings.at(i) == "Network") psdata.setType(ObjectType::Network);
+                    else if (columnStrings.at(i) == "Power") psdata.setType(ObjectType::Power);
+                } else if (colHeaders.at(i) == "Layout Image") {
+                    qDebug() << "Layout Image: " << columnStrings.at(i);
+                    psdata.setLayoutImgPath(columnStrings.at(i));
+                }
+                else if (colHeaders.at(i) == "System Image") psdata.setSystemImgPath(columnStrings.at(i));
+                else if (colHeaders.at(i) == "Wiring Image") psdata.setWiringImgPath(columnStrings.at(i));
+                else if (colHeaders.at(i).contains("Input")) psdata.addInput(columnStrings.at(i));
+                else if (colHeaders.at(i).contains("Output")) psdata.addOutput(columnStrings.at(i));
+                else if (colHeaders.at(i).contains("Height")) psdata.setHeight(columnStrings.at(i).toDouble());
+                else if (colHeaders.at(i).contains("Width")) psdata.setWidth(columnStrings.at(i).toDouble());
+            }
 
             if (position > indentations.last()) {
                 // The last child of the current parent is now the new parent
@@ -166,7 +192,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
             }
 
             // Append a new item to the current parent's list of children.
-            parents.last()->appendChild(new TreeItem(columnData, parents.last()));
+            parents.last()->appendChild(new TreeItem(psdata, parents.last()));
         }
 
         ++number;

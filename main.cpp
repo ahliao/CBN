@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //MainWindow w;
-    PSLibManager w;
+    //PSLibManager w;
+    SecBoxCreator w;
     //PSCDP::LOMDialog w;
-    //w.resize(500,500);
-    //w.show();
+    w.resize(600,600);
+    w.show();
 
     /*if (w.exec() == QDialog::Accepted) {
         PSObject psobj = w.getPSObject();

@@ -135,10 +135,7 @@ void PSCDP::PSObjectCreateDialog::handleDoneBtn()
         if (!outputTxtEdt.at(i)->text().isEmpty()) psobj.addInput(outputTxtEdt.at(i)->text());
     }
 
-    if (typeCmbox->currentText() == "General") psobj.setType(ObjectType::General);
-    else if (typeCmbox->currentText() == "IO") psobj.setType(ObjectType::IO);
-    else if (typeCmbox->currentText() == "Power") psobj.setType(ObjectType::Power);
-    else if (typeCmbox->currentText() == "Network") psobj.setType(ObjectType::Network);
+    psobj.setType(typeCmbox->currentText());
 
     accept();
 }
@@ -189,10 +186,7 @@ void PSCDP::PSObjectCreateDialog::loadPSObject(PSObject p)
     QPixmap wiringImage(p.getWiringImgPath());
     wiringImgPic->setPixmap(wiringImage);
     int index;
-    if (p.getType() == ObjectType::General) index = typeCmbox->findText("General");
-    else if (p.getType() == ObjectType::IO) index = typeCmbox->findText("IO");
-    else if (p.getType() == ObjectType::Power) index = typeCmbox->findText("Power");
-    else if (p.getType() == ObjectType::Network) index = typeCmbox->findText("Network");
+    index = typeCmbox->findText(p.getType());
     if (index != -1) typeCmbox->setCurrentIndex(index);
 
     QList<QString> inputs = p.getInputs();

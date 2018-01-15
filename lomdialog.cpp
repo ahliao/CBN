@@ -3,11 +3,13 @@
 #include <QFile>
 #include <QDebug>
 #include <QDir>
+#include <QCoreApplication>
 
 using namespace PSCDP;
 
-PSCDP::LOMDialog::LOMDialog(QWidget */*parent*/)
+PSCDP::LOMDialog::LOMDialog(QWidget *parent)
 {
+    Q_UNUSED(parent)
     //label = new QLabel("Dialog to add/edit a PSObject");
 
 
@@ -15,14 +17,14 @@ PSCDP::LOMDialog::LOMDialog(QWidget */*parent*/)
     QByteArray allLibsData;
 
     // Read the library list file
-    qDebug() << QDir::currentPath() + "/partlibs.txt";
-    QFile libFile(QDir::currentPath() + "\\partlibs.txt");
+    qDebug() << QCoreApplication::applicationDirPath() + "/partlibs.txt";
+    QFile libFile(QCoreApplication::applicationDirPath() + "\\partlibs.txt");
     libFile.open(QIODevice::ReadOnly);
     libList = QString(libFile.readAll()).split(QString("\n"));
     libFile.close();
 
     for (QString path : libList) {
-        QFile file(path);
+        QFile file(QCoreApplication::applicationDirPath() + path);
         file.open(QIODevice::ReadOnly);
         allLibsData.append(file.readAll());
         file.close();
@@ -32,6 +34,7 @@ PSCDP::LOMDialog::LOMDialog(QWidget */*parent*/)
 
     partsTree = new QTreeView;
     partsTree->setModel(model);
+    connect(partsTree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(handeDoneBtn()));
 
     layoutImageTopLbl = new QLabel("Layout Drawing");
     layoutImageLbl = new QLabel;

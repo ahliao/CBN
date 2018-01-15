@@ -29,23 +29,27 @@ SOURCES += \
     psobject.cpp \
     layoutwindow.cpp \
     renderarea.cpp \
-    secboxcreator.cpp \
     lomtablemodel.cpp \
     lomdialog.cpp \
     lomtreeitem.cpp \
     lomtreemodel.cpp \
     psobjectcreatedialog.cpp \
-    pslibmanager.cpp
+    pslibmanager.cpp \
+    lomeditor.cpp \
+    scheduleeditor.cpp \
+    scheduletablemodel.cpp
 
 HEADERS += \
         mainwindow.h \
     psobject.h \
     layoutwindow.h \
     renderarea.h \
-    secboxcreator.h \
     lomtablemodel.h \
     lomdialog.h \
     lomtreeitem.h \
     lomtreemodel.h \
     psobjectcreatedialog.h \
-    pslibmanager.h
+    pslibmanager.h \
+    lomeditor.h \
+    scheduleeditor.h \
+    scheduletablemodel.h

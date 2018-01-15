@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QVector>
+#include <QMimeData>
 #include "psobject.h"
 
 namespace PSCDP
@@ -18,6 +19,12 @@ namespace PSCDP
         int columnCount(const QModelIndex &parent) const;
         QVariant data(const QModelIndex &index, int role) const;
         Qt::DropActions supportedDropActions() const;
+        QStringList mimeTypes() const;
+        QMimeData *mimeData(const QModelIndexList &indexes) const;
+        bool canDropMimeData(const QMimeData *data, Qt::DropAction action,
+                             int row, int column, const QModelIndex &parent) const;
+        bool dropMimeData(const QMimeData *data, Qt::DropAction action,
+                          int row, int column, const QModelIndex &parent);
         Qt::ItemFlags flags(const QModelIndex &index) const;
         bool setData(const QModelIndex &index, const QVariant &value,
                          int role = Qt::EditRole);
@@ -29,8 +36,8 @@ namespace PSCDP
         bool appendPSObject(PSObject psobject);
         bool clear();
 
-        PSObject getPSObject(int row) { return LOM.at(row); }
-        QVector<PSObject> getPSObjects() { return LOM; }
+        PSObject getPSObject(int row) const { return LOM.at(row); }
+        QVector<PSObject> getPSObjects() const { return LOM; }
 
     private:
         QVector<PSObject> LOM;

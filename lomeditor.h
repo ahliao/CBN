@@ -9,27 +9,29 @@
 
 namespace PSCDP
 {
-    class SecBoxCreator : public QWidget
+    class LOMEditor : public QWidget
     {
         Q_OBJECT
     public:
-        explicit SecBoxCreator(QWidget *parent = nullptr);
+        explicit LOMEditor(QWidget *parent = nullptr);
+        QVector<PSObject> getLOM() const;
 
     signals:
+        void loadedLOM();
 
     public slots:
+        void newLOM();
         void loadLOM();
         void saveLOM();
         void addPSObject();
-        void editPSObject();
         void removePSObject();
 
     private:
         QTableView *LOMTableView;
+        QPushButton *newLOMBtn;
         QPushButton *loadLOMBtn;
         QPushButton *saveLOMBtn;
         QPushButton *addPSObjectBtn;
-        QPushButton *editPSObjectBtn;
         QPushButton *removePSObjectBtn;
 
         LOMTableModel *LOMModel;

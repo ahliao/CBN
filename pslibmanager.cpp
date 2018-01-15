@@ -99,10 +99,7 @@ void PSCDP::PSLibManager::loadLibClicked()
             if (colNames.at(i) == "Name") psobj.setName(line.at(i));
             else if (colNames.at(i) == "Description") psobj.setDescription(line.at(i));
             else if (colNames.at(i) == "Type") {
-                if (line.at(i) == "IO") psobj.setType(ObjectType::IO);
-                else if (line.at(i) == "General") psobj.setType(ObjectType::General);
-                else if (line.at(i) == "Network") psobj.setType(ObjectType::Network);
-                else if (line.at(i) == "Power") psobj.setType(ObjectType::Power);
+                psobj.setType(line.at(i));
             } else if (colNames.at(i) == "Layout Image") psobj.setLayoutImgPath(line.at(i));
             else if (colNames.at(i) == "System Image") psobj.setLayoutImgPath(line.at(i));
             else if (colNames.at(i) == "Wiring Image") psobj.setLayoutImgPath(line.at(i));
@@ -143,10 +140,7 @@ void PSCDP::PSLibManager::saveLibClicked()
 
     for (PSObject obj : psobjs) {
         out << '\t' << obj.getName() << '\t' << obj.getDescription() << '\t';
-        if (obj.getType() == ObjectType::General) out << "General" << '\t';
-        else if (obj.getType() == ObjectType::IO) out << "IO" << '\t';
-        else if (obj.getType() == ObjectType::Network) out << "Network" << '\t';
-        else if (obj.getType() == ObjectType::Power) out << "Power" << '\t';
+        out << obj.getType() << '\t';
         out << obj.getLayoutImgPath() << '\t' << obj.getSystemImgPath() << '\t' <<
                obj.getWiringImgPath() << '\t';
         QList<QString> inputs = obj.getInputs();

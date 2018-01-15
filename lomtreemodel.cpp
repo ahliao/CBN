@@ -14,7 +14,7 @@
 TreeModel::TreeModel(const QString &data, QObject *parent)
     : QAbstractItemModel(parent)
 {
-    PSObject rootData("", ObjectType::General, "Name", "Description");
+    PSObject rootData("", "General", "Name", "Description");
     rootItem = new TreeItem(rootData);
     qDebug() << rootData.getDescription();
     setupModelData(data.split(QString("\n")), rootItem);
@@ -160,10 +160,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
                 if (colHeaders.at(i) == "Name") psdata.setName(columnStrings[i]);
                 else if (colHeaders.at(i) == "Description") psdata.setDescription(columnStrings[i]);
                 else if (colHeaders.at(i) == "Type") {
-                    if (columnStrings.at(i) == "IO") psdata.setType(ObjectType::IO);
-                    else if (columnStrings.at(i) == "General") psdata.setType(ObjectType::General);
-                    else if (columnStrings.at(i) == "Network") psdata.setType(ObjectType::Network);
-                    else if (columnStrings.at(i) == "Power") psdata.setType(ObjectType::Power);
+                    psdata.setType(columnStrings.at(i));
                 } else if (colHeaders.at(i) == "Layout Image") {
                     qDebug() << "Layout Image: " << columnStrings.at(i);
                     psdata.setLayoutImgPath(columnStrings.at(i));

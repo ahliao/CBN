@@ -1,0 +1,9 @@
+VTW-001	VTW	Vertical Taut Wire	IO	Y:\CBN\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\LayoutImgs\test.png			Trouble	Alarm							0	0
+VTW-002	VTW	Vertical Taut Wire	IO	Y:\CBN\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\LayoutImgs\test.png			Trouble	Alarm							0	0
+BMS-001	BMS	Balanced Magnetic Switch	IO				Tamper	Alarm							0	0
+BMS-002	BMS	Balanced Magnetic Switch	IO				Tamper	Alarm							0	0
+VTW-003	VTW	Vertical Taut Wire	IO	Y:\CBN\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\LayoutImgs\test.png			Trouble	Alarm							0	0
+VTW-004	VTW	Vertical Taut Wire	IO	Y:\CBN\build-PSCDP-Desktop_Qt_5_10_0_MinGW_32bit-Debug\LayoutImgs\test.png			Trouble	Alarm							0	0
+BMS-003	BMS	Balanced Magnetic Switch	IO				Tamper	Alarm							0	0
+BMS-004	BMS	Balanced Magnetic Switch	IO				Tamper	Alarm							0	0
+FOSS-001	FOSS	FiberSenSys	IO				Fault	Alarm A							0	0
